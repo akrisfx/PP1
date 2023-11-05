@@ -1,10 +1,11 @@
 [
     {
-        "name" : "bolonieze",
+        "name": "chipsi",
         "price": 250,
         "weight": 300
-    },{
-        "name" : "sosiski jarenie",
+    },
+    {
+        "name": "sosiski jarenie",
         "price": 150,
         "weight": 400
     }
