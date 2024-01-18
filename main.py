@@ -93,8 +93,9 @@ def JsonToArr(filename):
         with open(filename, 'r', encoding='utf-8') as in_file:
             json_file = json.load(in_file)
             return json_file
-    except ValueError:
-        print("Oops!  That was no valid number.  Try again...", ValueError)
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+        return False
 
 def toDish(dict):
     return Dish(dict["name"], dict["price"], dict["weight"])
@@ -116,7 +117,11 @@ def toDrinks(drink_arr):
 
 def jsonToDishes(filename):
     dish_arr = JsonToArr(filename)
+    if not dish_arr:
+        return False
     return toDishes(dish_arr)
+
+        
 
 def jsonToDrinks(filename):
     drink_arr = JsonToArr(filename)
@@ -127,15 +132,21 @@ def arrToJson(arr, filename):
         for i in arr:
             arr_out.append(i.to_dict())
         js = json.dumps(arr_out, indent=4)
-        file = open(filename, "w", encoding='utf-8')
-        if file:
-            file.write(js)
-        else:
-            print("read file error")
+        try:
+            file = open(filename, "w", encoding='utf-8')
+            if file:
+                file.write(js)
+            else:
+                print("read file error")
+        except FileNotFoundError:
+            print(f"Error: File '{filename}' not found.")
+            return False
 
 
 
 dishes = jsonToDishes("dish.json")
+if not dishes:
+    print("Error")
 drinks = jsonToDrinks("drink.json")
 for i in dishes:
     print(i.name, i.price, i.weight)
